@@ -10,13 +10,5 @@ cd /YOUR_PROJ_PATH/BulletinBoardJavaRMI/ClientServer/src
 ```
 ./rebuilld.sh 
 ```
-3)  change directory to the src file of the **Starter** proj
-```
-cd /YOUR_PROJ_PATH/BulletinBoardJavaRMI/Starter/src
-```
-4) run the **Start.java** 
-```
-java Start 
-```
 
-*Note :* you can also run the **Start.java** from any java IDE 
+3) run the **Start.java** from any java IDE , or run it manually by passing the **jsch.jar** in the classpath option 
