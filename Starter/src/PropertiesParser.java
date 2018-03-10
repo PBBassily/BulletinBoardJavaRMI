@@ -37,6 +37,11 @@ public class PropertiesParser {
 		
 	}
 	
+	public String getServerName(){
+		return properties.getProperty("RW.serverRMI.name");
+		
+	}
+	
 	public String getServerUsername(){
 		return properties.getProperty("RW.server.username");
 		

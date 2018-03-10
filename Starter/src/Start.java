@@ -22,7 +22,9 @@ public class Start {
 
 		PropertiesParser propertiesParser = new PropertiesParser();
 		
+		setupRMIRegistery(propertiesParser);
 		setupServer(propertiesParser);
+		
 		try {
 			
 			Thread.sleep(SERVER_AFTER_RUN_DELAY);
@@ -58,9 +60,10 @@ public class Start {
 
 	private void setupClient(PropertiesParser propertiesParser, int id , boolean isReader) {
 		 
-		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJava/Client/bin;java Client"
+		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
+				+" java ClientRMI"
 				+" "+ propertiesParser.getServerIP()
-				+" "+ propertiesParser.getServerPort()
+				+" "+ propertiesParser.getServerName()
 				+" "+ isReader
 				+" "+ id
 				+" "+ propertiesParser.getAccessNum();
@@ -92,7 +95,8 @@ public class Start {
 
 	private void setupServer(PropertiesParser propertiesParser) {
 		
-		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJava/Server/bin;java Server "+propertiesParser.getServerPort();
+		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
+		+"java ServerRMI "+propertiesParser.getServerName();
 		
 		SSHChannelCreator sshChannelCreator = new SSHChannelCreator(propertiesParser.getServerUsername(),
 				propertiesParser.getServerPassword(), propertiesParser.getServerIP() , command);
@@ -101,5 +105,28 @@ public class Start {
 		sshChannelCreator.start();
 		
 	}
+	
+	/**
+	 * 
+	 * @param propertiesParser
+	 * 
+	 *  parse server's username , password , command , ip and ssh on it
+	 *  runs on a brand new thread
+	 */
+
+	private void setupRMIRegistery(PropertiesParser propertiesParser) {
+		
+		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
+//				+ "rmic ServerRMI ; "
+				+ "rmiregistry ; ";
+		
+		SSHChannelCreator sshChannelCreator = new SSHChannelCreator(propertiesParser.getServerUsername(),
+				propertiesParser.getServerPassword(), propertiesParser.getServerIP() , command);
+		
+		
+		sshChannelCreator.start();
+		
+	}
+	
 
 }

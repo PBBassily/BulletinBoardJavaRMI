@@ -2,6 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="/home/paula/Downloads/jsch-0.1.54.jar"/>
+	<classpathentry kind="lib" path="/home/paula/Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/Starter/jsch-0.1.54.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
