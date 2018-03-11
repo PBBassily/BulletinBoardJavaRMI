@@ -60,7 +60,9 @@ public class Start {
 
 	private void setupClient(PropertiesParser propertiesParser, int id , boolean isReader) {
 		 
-		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
+		int clientID = isReader ? id : (id-propertiesParser.getReadersNum());
+		
+		String command = "cd "+propertiesParser.getClientDirPath(clientID, isReader) +" ;"
 				+" java ClientRMI"
 				+" "+ propertiesParser.getServerIP()
 				+" "+ propertiesParser.getServerName()
@@ -68,7 +70,7 @@ public class Start {
 				+" "+ id
 				+" "+ propertiesParser.getAccessNum();
 		
-		int clientID = isReader ? id : (id-propertiesParser.getReadersNum());
+		
 		
 		String clientIP = isReader ? propertiesParser.getReader(clientID):propertiesParser.getWriter(clientID) ;
 		
@@ -95,8 +97,10 @@ public class Start {
 
 	private void setupServer(PropertiesParser propertiesParser) {
 		
-		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
-		+"java ServerRMI "+propertiesParser.getServerName();
+		String command = "cd "+propertiesParser.getServerDirPath()+" ;"
+		+"java ServerRMI"
+		+" "+propertiesParser.getServerName()
+		+" "+propertiesParser.getServerIP();
 		
 		SSHChannelCreator sshChannelCreator = new SSHChannelCreator(propertiesParser.getServerUsername(),
 				propertiesParser.getServerPassword(), propertiesParser.getServerIP() , command);
@@ -116,9 +120,8 @@ public class Start {
 
 	private void setupRMIRegistery(PropertiesParser propertiesParser) {
 		
-		String command = "cd Documents/gen_working_space/eclipse_java_ws/BulletinBoardJavaRMI/ClientServer/src;"
-//				+ "rmic ServerRMI ; "
-				+ "rmiregistry ; ";
+		String command = "cd "+propertiesParser.getServerDirPath()+" ;"
+						+"rmiregistry ; ";
 		
 		SSHChannelCreator sshChannelCreator = new SSHChannelCreator(propertiesParser.getServerUsername(),
 				propertiesParser.getServerPassword(), propertiesParser.getServerIP() , command);

@@ -4,10 +4,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.concurrent.Semaphore;
 
-public class ServerRMI extends UnicastRemoteObject implements RMIUtilInterface {
+public class ServerRMI  extends UnicastRemoteObject implements RMIUtilInterface {
 
 	/**
 	 * 
@@ -167,6 +169,7 @@ public class ServerRMI extends UnicastRemoteObject implements RMIUtilInterface {
 		try {
 
 			String serverName = args[0] ;
+			String serverIP = args[1];
 			// logs files
 			
 			readersFile = new BufferedWriter(new FileWriter("Readers"));
@@ -179,8 +182,9 @@ public class ServerRMI extends UnicastRemoteObject implements RMIUtilInterface {
 			writersFile.append(String.format("%-10s %-10s %-10s%n", "sSeq",
 					"oVal", "wId"));
 
+			System.setProperty("java.rmi.server.hostname",serverIP);  
 			ServerRMI server = new ServerRMI();
-			Naming.rebind("rmi://localhost/"+serverName, server);
+			Naming.rebind("rmi://"+serverIP+"/"+serverName, server); 	
 			
 			System.out.println("RMI Server is ready ");
 		} catch (Exception e) {
