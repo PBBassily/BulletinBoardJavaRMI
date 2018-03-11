@@ -14,6 +14,7 @@ public class ClientRMI {
 																// writer
 			int clientNum = Integer.parseInt(args[3]);
 			int numberOfAccess = Integer.parseInt(args[4]);
+			String rmiRegPort = args[5];
 
 			System.out.println("==> Client" + clientNum + "   started");
 
@@ -39,7 +40,7 @@ public class ClientRMI {
 			}
 
 			//
-			String serverURL = "rmi://" + serverIP + "/"+serverName;
+			String serverURL = "rmi://" + serverIP +":"+rmiRegPort+ "/"+serverName;
 			RMIUtilInterface remoteServer = (RMIUtilInterface) Naming
 					.lookup(serverURL);
 

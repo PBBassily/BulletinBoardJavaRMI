@@ -170,6 +170,7 @@ public class ServerRMI  extends UnicastRemoteObject implements RMIUtilInterface 
 
 			String serverName = args[0] ;
 			String serverIP = args[1];
+			String rmiRegPort = args[2];
 			// logs files
 			
 			readersFile = new BufferedWriter(new FileWriter("Readers"));
@@ -184,7 +185,7 @@ public class ServerRMI  extends UnicastRemoteObject implements RMIUtilInterface 
 
 			System.setProperty("java.rmi.server.hostname",serverIP);  
 			ServerRMI server = new ServerRMI();
-			Naming.rebind("rmi://"+serverIP+"/"+serverName, server); 	
+			Naming.rebind("rmi://"+serverIP+":"+rmiRegPort+"/"+serverName, server); 	
 			
 			System.out.println("RMI Server is ready ");
 		} catch (Exception e) {

@@ -55,6 +55,11 @@ public class PropertiesParser {
 		return properties.getProperty("RW.server.password");
 
 	}
+	public String getRMIRegisteryPort() {
+		return properties.getProperty("RW.rmiregistry.port");
+
+	}
+
 
 	public int getReadersNum() {
 		String readersNum = properties.getProperty("RW.numberOfReaders");
