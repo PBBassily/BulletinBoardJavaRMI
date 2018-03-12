@@ -1,6 +1,10 @@
 # BulletinBoardJavaRMI
 Impelementing bulletin board client-server project using RMI instead of sockets (which can be found [here](https://github.com/PBBassily/BulletinBoardJava))
 
+## System Properties Config
+- **system.properties** file can be found in the Starter project
+- change the properties of the system according to your setup of the project
+
 ## Usage 
 1) change directory to the src file of the **ClientServer** proj
 ```
@@ -12,3 +16,4 @@ cd /YOUR_PROJ_PATH/BulletinBoardJavaRMI/ClientServer/src
 ```
 
 3) run the **Start.java** from any java IDE , or run it manually by passing the **jsch.jar** in the classpath option 
+
