@@ -1,4 +1,5 @@
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.Naming;
@@ -21,52 +22,43 @@ public class ClientRMI {
 			// Open log file
 			BufferedWriter fileWriter = null;
 			try {
-				fileWriter = new BufferedWriter(new FileWriter("log"
-						+ clientNum));
+				File logFile= new File("ClientsLogs"+ File.separator +"log" + clientNum);
+				logFile.getParentFile().mkdirs();
+				fileWriter = new BufferedWriter(new FileWriter(logFile));
 				if (isReader) {
 					fileWriter.append("Client type: Reader\n");
 					fileWriter.append("Client Name: " + clientNum + "\n");
-					fileWriter.append(String.format("%-10s %-10s %-10s%n",
-							"rSeq", "sSeq", "oVal"));
+					fileWriter.append(String.format("%-10s %-10s %-10s%n", "rSeq", "sSeq", "oVal"));
 				} else {
 					fileWriter.append("Client type: Writer\n");
 					fileWriter.append("Client Name: " + clientNum + "\n");
-					fileWriter.append(String.format("%-10s %-10s%n", "rSeq",
-							"sSeq"));
+					fileWriter.append(String.format("%-10s %-10s%n", "rSeq", "sSeq"));
 				}
 			} catch (IOException e) {
-				System.out.println(e + "==> Client" + clientNum
-						+ "   couldn't open log file");
+				System.out.println(e + "==> Client" + clientNum + "   couldn't open log file");
 			}
 
+			
 			//
-			String serverURL = "rmi://" + serverIP +":"+rmiRegPort+ "/"+serverName;
-			RMIUtilInterface remoteServer = (RMIUtilInterface) Naming
-					.lookup(serverURL);
+			String serverURL = "rmi://" + serverIP + ":" + rmiRegPort + "/" + serverName;
+			RMIUtilInterface remoteServer = (RMIUtilInterface) Naming.lookup(serverURL);
 
 			for (int i = 0; i < numberOfAccess; i++) {
 
-				System.out.println("==> Client" + clientNum
-						+ "   connected to server");
+				System.out.println("==> Client" + clientNum + "   connected to server");
 				String logSt = "";
 
 				// Send request
 				if (isReader) {
 					RequestState state = remoteServer.readVal(clientNum);
-					logSt = String.format("%-10s %-10s %-10s%n", state.rSeq,
-							state.sSeq, state.val);
-				}
-
-				else {
+					logSt = String.format("%-10s %-10s %-10s%n", state.getrSeq(), state.getsSeq(), state.getVal());
+				} else {
 					int newVal = clientNum;
-					RequestState state = remoteServer.writeVal(clientNum,
-							newVal);
-					logSt = String.format("%-10s %-10s%n", state.rSeq,
-							state.sSeq);
-
+					RequestState state = remoteServer.writeVal(clientNum, newVal);
+					logSt = String.format("%-10s %-10s%n", state.getrSeq(), state.getsSeq());
 				}
+				// print log to the log file
 				System.out.println(" ==> " + logSt);
-
 				fileWriter.append(logSt + "\n");
 			}
 			try {
@@ -78,7 +70,7 @@ public class ClientRMI {
 		} catch (Exception e) {
 			System.out.println("Exception:  " + e);
 		}
-		
+
 	}
 
 }

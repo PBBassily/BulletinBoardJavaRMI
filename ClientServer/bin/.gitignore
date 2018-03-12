@@ -1,12 +1,2 @@
-/Client.class
-/ClientRMI.class
-/RMIUtilInterface.class
-/RequestState.class
-/Server$status.class
-/Server.class
-/ServerListener.class
-/ServerRMI.class
-/Readers
-/Writers
-/rebuilld.sh
+/ClientsLogs/
 /rebuild.sh
